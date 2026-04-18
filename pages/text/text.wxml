@@ -1,0 +1,134 @@
+<view class="page">
+  <view class="header">
+    <text class="eyebrow">NEWS APP</text>
+    <text class="title">新闻列表</text>
+    <text class="summary">原生小程序版本，数据层已改成可切换接口的服务层，图片和链接都做了统一归一化处理。</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="state-card">
+    <text class="state-title">正在加载新闻</text>
+    <text class="state-note">先渲染页面骨架，数据到位后再展示内容。</text>
+  </view>
+
+  <view wx:elif="{{errorMessage}}" class="state-card error">
+    <text class="state-title">{{errorMessage}}</text>
+    <text class="state-note">先检查项目配置和数据源，再点重试。</text>
+    <button class="retry-btn" bindtap="retryLoad">重试</button>
+  </view>
+
+  <block wx:elif="{{empty}}">
+    <view class="state-card">
+      <text class="state-title">没有可展示的数据</text>
+      <text class="state-note">这通常说明接口为空，或者 mock 数据没有装进来。</text>
+      <button class="retry-btn" bindtap="retryLoad">刷新</button>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="section">
+      <view class="section-head">
+        <text class="section-title">热词</text>
+        <text class="section-subtitle">{{news.hotwords.length}} 条</text>
+      </view>
+      <view class="tag-cloud">
+        <text
+          class="tag"
+          wx:for="{{news.hotwords}}"
+          wx:key="id"
+        >{{item.word}}</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <text class="section-title">热新闻</text>
+        <text class="section-subtitle">{{news.hotnews.length}} 条</text>
+      </view>
+
+      <view class="card-list">
+        <view class="news-card" wx:for="{{news.hotnews}}" wx:key="id">
+          <image
+            class="news-cover"
+            src="{{item.img}}"
+            mode="aspectFill"
+            data-list="hotnews"
+            data-index="{{index}}"
+            binderror="handleListImageError"
+          ></image>
+          <view class="news-body">
+            <text class="news-title">{{item.title}}</text>
+            <text class="meta">发布于 {{item.date}} · 公众号 {{item.account}}</text>
+            <text class="summary-text">{{item.summary}}</text>
+            <view class="action-row">
+              <button
+                class="detail-btn"
+                size="mini"
+                data-list="hotnews"
+                data-index="{{index}}"
+                bindtap="openDetail"
+              >查看详情</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head">
+        <text class="section-title">头条新闻</text>
+        <text class="section-subtitle">{{news.topnews.length}} 条</text>
+      </view>
+
+      <view class="card-list">
+        <view class="top-card" wx:for="{{news.topnews}}" wx:key="id">
+          <image
+            class="top-cover"
+            src="{{item.img}}"
+            mode="aspectFill"
+            data-list="topnews"
+            data-index="{{index}}"
+            binderror="handleListImageError"
+          ></image>
+          <view class="top-body">
+            <text class="news-title">{{item.title}}</text>
+            <text class="meta">发布于 {{item.date}} · 公众号 {{item.account}}</text>
+            <text class="summary-text">{{item.summary}}</text>
+            <text class="link-preview">{{item.link}}</text>
+            <view class="action-row">
+              <button
+                class="detail-btn ghost"
+                size="mini"
+                data-list="topnews"
+                data-index="{{index}}"
+                bindtap="openDetail"
+              >查看详情</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{!modalHidden}}" class="modal-mask" catchtap="closeDetail">
+    <view class="modal-card" catchtap="noop">
+      <view class="modal-handle"></view>
+      <image
+        class="modal-cover"
+        src="{{modalImage}}"
+        mode="aspectFill"
+        binderror="handleModalImageError"
+      ></image>
+      <text class="modal-title">{{modalContent.title}}</text>
+      <text class="modal-meta">公众号 {{modalContent.account}} · {{modalContent.date}}</text>
+      <text class="modal-summary">{{modalContent.summary}}</text>
+      <view class="link-box">
+        <text class="link-label">链接</text>
+        <text class="link-value">{{modalContent.link}}</text>
+      </view>
+      <view class="modal-actions">
+        <button class="ghost-btn" bindtap="copyCurrentLink">复制链接</button>
+        <button class="primary-btn" bindtap="closeDetail">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

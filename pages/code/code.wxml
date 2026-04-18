@@ -1,0 +1,90 @@
+<view class="page {{pageConfig.theme}}">
+  <view class="hero">
+    <text class="eyebrow">GNSS HUB</text>
+    <text class="hero-title">{{pageConfig.title}}</text>
+    <text class="hero-desc">{{pageConfig.subtitle}}</text>
+    <text class="hero-note">{{pageConfig.summary}}</text>
+  </view>
+
+  <view class="search-card">
+    <input
+      class="search-input"
+      placeholder="{{pageConfig.searchPlaceholder}}"
+      value="{{keyword}}"
+      confirm-type="search"
+      bindinput="onKeywordInput"
+    />
+    <view class="search-meta">
+      <text class="result-count">共 {{visibleItems.length}} 条</text>
+      <text wx:if="{{keyword}}" class="clear-link" bindtap="clearKeyword">清空搜索</text>
+    </view>
+  </view>
+
+  <scroll-view class="filter-strip" scroll-x="true" show-scrollbar="false">
+    <view
+      class="chip {{activeFilter === item ? 'chip-active' : ''}}"
+      wx:for="{{pageConfig.filters}}"
+      wx:key="*this"
+      data-filter="{{item}}"
+      bindtap="onFilterTap"
+    >{{item}}</view>
+  </scroll-view>
+
+  <view wx:if="{{loading}}" class="state-card">
+    <text class="state-title">正在加载内容</text>
+    <text class="state-note">当前先使用本地示例数据，后面接接口时只换数据层。</text>
+  </view>
+
+  <view wx:elif="{{visibleItems.length === 0}}" class="state-card">
+    <text class="state-title">没有匹配结果</text>
+    <text class="state-note">{{pageConfig.emptyText}}</text>
+    <button class="action-button primary" bindtap="clearKeyword">重置筛选</button>
+  </view>
+
+  <block wx:else>
+    <view class="card-list">
+      <view class="news-card" wx:for="{{visibleItems}}" wx:key="id">
+        <view class="card-head">
+        <text class="card-badge">{{pageConfig.badge}}</text>
+          <text class="card-time">{{item.time}}</text>
+        </view>
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-summary">{{item.summary}}</text>
+        <view class="meta-row">
+          <text class="meta-item" wx:for="{{item.meta}}" wx:for-item="metaItem" wx:key="*this">{{metaItem}}</text>
+        </view>
+        <view class="tag-row">
+          <text class="tag" wx:for="{{item.tags}}" wx:for-item="tagItem" wx:key="*this">{{tagItem}}</text>
+        </view>
+        <view class="card-actions">
+          <button class="action-button ghost" data-index="{{index}}" bindtap="openDetail">查看详情</button>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{!detailHidden}}" class="drawer-mask" catchtap="closeDetail">
+    <view class="drawer" catchtap="noop">
+      <text class="drawer-title">{{detailItem.title}}</text>
+      <text class="drawer-source">{{detailItem.source}} · {{detailItem.time}}</text>
+      <text class="drawer-summary">{{detailItem.summary}}</text>
+
+      <view class="drawer-section">
+        <text class="drawer-section-title">标签</text>
+        <view class="tag-row">
+          <text class="tag" wx:for="{{detailTags}}" wx:for-item="tagItem" wx:key="*this">{{tagItem}}</text>
+        </view>
+      </view>
+
+      <view class="drawer-section">
+        <text class="drawer-section-title">链接</text>
+        <text class="drawer-link">{{detailItem.link}}</text>
+      </view>
+
+      <view class="drawer-actions">
+        <button class="action-button ghost" bindtap="copyLink">复制链接</button>
+        <button class="action-button primary" bindtap="closeDetail">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

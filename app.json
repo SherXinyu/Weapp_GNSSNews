@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/news/news",
+    "pages/articles/articles",
+    "pages/code/code"
+  ],
+  "lazyCodeLoading": "requiredComponents",
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#17202b",
+    "navigationBarTitleText": "GNSS Hub",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#7a8492",
+    "selectedColor": "#ff7017",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/news/news",
+        "text": "新闻",
+        "iconPath": "assets/tabbar/news.png",
+        "selectedIconPath": "assets/tabbar/news-active.png"
+      },
+      {
+        "pagePath": "pages/articles/articles",
+        "text": "文章",
+        "iconPath": "assets/tabbar/articles.png",
+        "selectedIconPath": "assets/tabbar/articles-active.png"
+      },
+      {
+        "pagePath": "pages/code/code",
+        "text": "代码",
+        "iconPath": "assets/tabbar/code.png",
+        "selectedIconPath": "assets/tabbar/code-active.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+<view class="home">
+  <view class="hero">
+    <text class="brand">NEWS APP</text>
+    <text class="headline">新闻浏览演示</text>
+    <text class="subhead">{{subtitle}}</text>
+  </view>
+
+  <view class="profile-card">
+    <view class="avatar">{{avatarLetter}}</view>
+    <view class="profile-copy">
+      <text class="profile-title">{{username}}</text>
+      <text class="profile-note">{{welcome}}</text>
+    </view>
+  </view>
+
+  <button class="enter-btn" bindtap="bindViewTap">{{welcome}}</button>
+</view>

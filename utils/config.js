@@ -1,0 +1,17 @@
+var PLACEHOLDER_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACwCAQAAAB2E+g7AAAAHUlEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAA4GgK1QAAAZ2O2h0AAAAASUVORK5CYII="
+
+module.exports = {
+  API_BASE_URL: "",
+  REMOTE_MODE: "remote",
+  GDELT_QUERY: '(GNSS OR BeiDou OR Beidou OR GPS OR Galileo OR "satellite navigation")',
+  GDELT_TIMESPAN: "7d",
+  OPENALEX_QUERY: "GNSS",
+  OPENALEX_FROM_DATE: "2020-01-01",
+  OPENALEX_MAILTO: "",
+  GITHUB_QUERY: "(GNSS OR BeiDou OR Beidou) in:name,description,readme fork:false",
+  GITHUB_TOKEN: "",
+  GITHUB_USER_AGENT: "GNSS Hub",
+  DEFAULT_ARTICLE_HOST: "https://mp.weixin.qq.com",
+  PLACEHOLDER_IMAGE: PLACEHOLDER_IMAGE
+}
